@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 Home
+<br>
+<span sec:authentication="name"></span>
 
 <br>
+<ul>
+    <li><a href="/projects"> 프로젝트 만들기 </a></li>
+    <li><a th:href="@{/members/{memberId}/projects(memberId=${#authentication.name})}">
+        내 프로젝트 보기 </a></li>
+    <li><a href="/auth/logout">로그아웃</a></li>
+</ul>
 
-<a href="/auth/logout">로그아웃</a>
 
 </body>
 </html>
