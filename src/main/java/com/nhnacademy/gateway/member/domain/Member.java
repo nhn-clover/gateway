@@ -13,10 +13,10 @@ public class Member {
     private String email;
     private Status status;
 
-    public Member(String memberId, String name, String email) {
+    public Member(String memberId, String name, String email, Status status) {
         this.memberId = memberId;
         this.name = name;
         this.email = email;
-        this.status = Status.ACTIVE;
+        this.status = status;
     }
 }
