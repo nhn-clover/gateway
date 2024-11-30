@@ -1,30 +1,27 @@
 package com.nhnacademy.gateway.member.controller;
 
 import com.nhnacademy.gateway.common.client.AccountApiClient;
-import com.nhnacademy.gateway.member.domain.Member;
 import com.nhnacademy.gateway.member.domain.MemberCreateRequest;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/auth/register")
+@RequiredArgsConstructor
 public class MemberRegisterController {
 
-    @Autowired
-    private AccountApiClient accountApiClient;
+    private final AccountApiClient accountApiClient;
 
     @GetMapping
-    public String register() {
+    public String getRegister() {
         return "/auth/register";
     }
 
     @PostMapping
     public String register(
-            @Valid @RequestBody MemberCreateRequest request
-            ) {
-
+            @ModelAttribute MemberCreateRequest request
+    ) {
         // TODO 어카운트 서버로 멤버 등록 요청 전송
         accountApiClient.register(request);
 
