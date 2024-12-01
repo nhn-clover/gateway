@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Details</title>
+</head>
+<body>
+<h1>Task Details</h1>
+
+<!-- Task Information -->
+<section>
+  <h2>Task Info</h2>
+  <p><strong>Task ID:</strong> <span th:text="${task.taskId}"></span></p>
+  <p><strong>Content:</strong> <span th:text="${task.content}"></span></p>
+  <p><strong>Project:</strong> <span th:text="${task.project.projectName}"></span></p>
+  <p><strong>MileStone:</strong> <span th:text="${task.mileStone.mileStoneName}"></span></p>
+  <p><strong>Tags:</strong> <span th:text="${task.tags}"></span></p>
+</section>
+
+<hr>
+
+<!-- Comment Section -->
+<section>
+  <h2>Comments</h2>
+  <ul>
+    <li th:each="comment : ${task.comments}">
+      <strong th:text="${comment.writerId}"></strong>: <span th:text="${comment.content}"></span>
+      <form th:action="@{/tasks/{taskId}/comments/{commentId}/delete(taskId=${task.taskId}, commentId=${comment.commentId})}" method="post">
+        <button type="submit">Delete</button>
+      </form>
+      <form th:action="@{/tasks/{taskId}/comments/{commentId}/edit(taskId=${task.taskId}, commentId=${comment.commentId})}" method="get">
+        <button type="submit">Edit</button>
+      </form>
+    </li>
+  </ul>
+
+  <h3>Add a Comment</h3>
+  <form th:action="@{/tasks/{taskId}/comments(taskId=${task.taskId})}" method="post">
+    <input type="text" name="content" placeholder="Write your comment..." required>
+    <input type="hidden" name="writerId" th:value="${user.id}">
+    <button type="submit">Add Comment</button>
+  </form>
+</section>
+
+<hr>
+
+<!-- Edit Milestone and Tags -->
+<section>
+  <h2>Edit Milestone and Tags</h2>
+  <form th:action="@{/tasks/{taskId}/edit(taskId=${task.taskId})}" method="get">
+    <button type="submit">Edit Milestone and Tags</button>
+  </form>
+</section>
+
+</body>
+</html>
