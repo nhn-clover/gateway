@@ -45,22 +45,24 @@ public interface TaskApiClient {
     public void deleteProject(@PathVariable Long projectId);
 
     // 특정 프로젝트의 태그 리스트 조회
-
+    @GetMapping("/project/{projectId}/tags")
+    public List<Tag> getTags(@PathVariable("projectId") Long projectId);
 
     // 태그 추가
     @PostMapping("/tag")
     public Tag createTag(@RequestBody TagRequest tagRequest);
 
     // 태그 수정 (이름)
-
+    @PutMapping("/tags/{tagId}")
+    public Tag updateTag(@PathVariable("tagId") Long tagId, @RequestBody TagRequest tagRequest);
 
     // 태그 삭제
     @DeleteMapping("/tags/{tagId}")
     public void deleteTag(@PathVariable Long tagId);
 
     // 특정 프로젝트의 태스크 리스트 조회
-    @GetMapping("/tasks/{projectId}")
-    public List<Task> getTasks(@PathVariable("projectId") long projectId);
+    @GetMapping("/project/{projectId}/task")
+    public List<Task> getTasksByProject(@PathVariable("projectId") long projectId);
 
     // 태스크 등록
     @PostMapping("/task")
@@ -75,7 +77,8 @@ public interface TaskApiClient {
     public void deleteTask(@PathVariable long taskId);
 
     // 특정 프로젝트의 마일스톤 리스트 조회
-
+    @GetMapping("/project/{projectId}/milestone")
+    public List<Milestone> getMilestones(@PathVariable Long projectId);
 
     // 마일스톤 추가
     @PostMapping("/milestone")
