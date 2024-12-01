@@ -7,6 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Tag {
     private long tagId;
-    private long projectId;
     private String tagName;
 }

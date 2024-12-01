@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class Comment {
     private long commentId;
-    private long taskId;
     private String writerId;    // 작성자 멤버의 인덱스
     private String content;
 }
