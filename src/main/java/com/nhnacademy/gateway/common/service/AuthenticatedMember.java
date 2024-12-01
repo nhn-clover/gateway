@@ -12,6 +12,7 @@ public class AuthenticatedMember implements UserDetails {
     private String id;
     private String password;
 
+
     public AuthenticatedMember(String id, String password) {
         this.id = id;
         this.password = password;
@@ -26,6 +27,7 @@ public class AuthenticatedMember implements UserDetails {
     public String getPassword() {
         return this.password;
     }
+
 
     @Override
     public String getUsername() {

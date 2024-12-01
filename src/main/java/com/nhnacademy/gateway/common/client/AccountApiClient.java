@@ -16,8 +16,8 @@ public interface AccountApiClient {
     public ResponseEntity register(@RequestBody MemberCreateRequest memberCreateRequest);
 
     // 회원 정보 가져오기 요청
-    @GetMapping("/members/{id}")
-    public Member getMember(@PathVariable("id") Long id);
+    @GetMapping("/members/{memberId}")
+    public Member getMember(@PathVariable("memberId") String  memberId);
 
     // 로그인 요청 - 로그인 리퀘스트를 전송하면
     @PostMapping("/login")
