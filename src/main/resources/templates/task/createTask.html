@@ -1,12 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Task</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+<div class="container">
+    <div class="header">
+        <h1>태스크 생성</h1>
+        <a th:href="@{/projects/{projectId}(projectId=${taskRequest.projectId})}" class="btn btn-back" style="background-color: #007bff;">프로젝트로 돌아가기</a>
+    </div>
 
-테스크 생성
+    <form th:action="@{/projects/{projectId}/tasks(projectId=${taskRequest.projectId})}" method="post">
+        <div>
+            <label for="content">Task Content:</label>
+            <input type="text" id="content" name="content" th:value="${taskRequest.content}" placeholder="Enter task content" required>
+        </div>
+        <br>
+        <div>
+            <label for="mileStoneId">MileStone ID (Optional):</label>
+            <input type="number" id="mileStoneId" name="mileStoneId" th:value="${taskRequest.mileStoneId}">
+        </div>
+        <br>
+        <button type="submit" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Create Task</button>
+    </form>
+</div>
 
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 2.5em;
+        color: #333;
+    }
+
+    label {
+        font-size: 1em;
+        color: #333;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-back {
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background-color: #0056b3;
+    }
+</style>
 </body>
 </html>
