@@ -2,6 +2,9 @@ package com.nhnacademy.gateway.project.controller;
 
 import com.nhnacademy.gateway.project.domain.Project;
 import com.nhnacademy.gateway.project.domain.Status;
+import com.nhnacademy.gateway.task.domain.Task;
+import com.nhnacademy.gateway.task.domain.TaskRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +25,9 @@ public class ProjectController {
 
         List<Project> projects = new ArrayList<>();
 
-        projects.add(new Project(1L , "프로젝트1", Status.IN_PROGRESS));
-        projects.add(new Project(2L , "프로젝트2", Status.IN_PROGRESS));
-        projects.add(new Project(3L , "프로젝트3", Status.IN_PROGRESS));
+        projects.add(new Project(1L , "프로젝트1", Status.IN_PROGRESS,1));
+        projects.add(new Project(2L , "프로젝트2", Status.IN_PROGRESS,2));
+        projects.add(new Project(3L , "프로젝트3", Status.IN_PROGRESS,3));
 
 
         model.addAttribute("projects", projects);
@@ -69,6 +72,60 @@ public class ProjectController {
 //    }
 
 
+    // 특정 프로젝트의 태스크 리스트 페이지
+    @GetMapping("/{projectId}/tasks")
+    public String listTasks(@PathVariable("projectId") long projectId, Model model) {
+        log.info("Viewing tasks for projectId: {}", projectId);
 
+        // 프로젝트 ID에 해당하는 태스크 데이터 생성
+        List<Task> tasks = List.of(
+                new Task(1L, "태스크 1"),
+                new Task(2L, "태스크 2"),
+                new Task(3L, "태스크 3")
+        );
+
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("tasks", tasks);
+        return "/project/projectDetail"; // 태스크 리스트 페이지
+    }
+
+    // 특정 태스크의 세부 사항 페이지
+    @GetMapping("/{projectId}/tasks/{taskId}")
+    public String detailTask(@PathVariable("projectId") long projectId,
+                             @PathVariable("taskId") long taskId,
+                             Model model) {
+        log.info("Viewing task details for projectId: {}, taskId: {}", projectId, taskId);
+
+        // 특정 태스크 데이터 생성
+        Task task = new Task(taskId, "태스크 " + taskId);
+
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("task", task);
+        return "/task/task"; // 태스크 세부 사항 페이지
+    }
+
+    // 태스크 추가 페이지
+    @GetMapping("/{projectId}/tasks/create")
+    public String createTaskView(@PathVariable("projectId") long projectId, Model model) {
+        TaskRequest taskRequest = new TaskRequest();
+        taskRequest.setProjectId(projectId);
+        model.addAttribute("taskRequest", taskRequest);
+        return "/task/createTask"; // 태스크 추가 페이지
+    }
+
+    // 태스크 추가 처리
+    @PostMapping("/{projectId}/tasks")
+    public String createTask(@PathVariable("projectId") long projectId,
+                             @Valid @ModelAttribute TaskRequest taskRequest,
+                             Model model) {
+        log.info("Adding new task to projectId: {}", projectId);
+        log.info("Task details - taskId: {}, content: {}",
+                taskRequest.getTaskId(),
+                taskRequest.getContent());
+
+        // 실제 태스크 추가 로직은 생략
+        model.addAttribute("message", "태스크가 성공적으로 추가되었습니다!");
+        return "redirect:/projects/" + projectId + "/project/projectDetail"; // 태스크 리스트로 리다이렉트
+    }
 
 }

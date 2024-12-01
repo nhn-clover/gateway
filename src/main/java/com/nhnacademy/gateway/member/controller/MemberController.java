@@ -23,9 +23,9 @@ public class MemberController {
         // model 에 추가
 
         // list로 받고
-        List<Project> projects = Arrays.asList(new Project(1L, "project1", Status.TODO),
-                new Project(2L, "project2", Status.FINISH),
-                new Project(3L, "project3", Status.IN_PROGRESS));
+        List<Project> projects = Arrays.asList(new Project(1L, "project1", Status.TODO,1),
+                new Project(2L, "project2", Status.FINISH,2),
+                new Project(3L, "project3", Status.IN_PROGRESS,3));
 
         model.addAttribute("projects",projects);
 
