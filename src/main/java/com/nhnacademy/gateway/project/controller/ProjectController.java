@@ -74,9 +74,13 @@ public class ProjectController {
     public String viewDetailProject(@PathVariable("projectId") long projectId, Model model){
         log.info("projectId : {}", projectId);
 
+        Project project = taskApiClient.getProject(projectId);
+
         List<String> tasks = List.of("테스크1", "테스크2","테스크4", "테스크5");
 
+        log.info("projectName : {}", project.getProject_name());
 
+        model.addAttribute("projectName", project.getProject_name());
         model.addAttribute("tasks", tasks);
 
         return "/project/projectDetail";

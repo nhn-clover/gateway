@@ -108,6 +108,9 @@
     </style>
 </head>
 <body>
+
+<p th:text="${projectName}">프로젝트 이름</p>
+
 <div class="container">
     <div class="header">
         <h1>Task List</h1>
@@ -125,6 +128,9 @@
         </thead>
         <tbody>
         <!-- If tasks are available -->
+
+
+
         <tr th:each="task : ${tasks}">
             <td th:text="${task}">Task Name</td>
 
