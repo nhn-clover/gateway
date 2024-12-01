@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Project List</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      color: #333;
+    }
+
+    .project-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .project-card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex: 1 1 calc(33.333% - 20px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .project-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.5em;
+      color: #007bff;
+    }
+
+    .project-card p {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .project-card .status {
+      margin-top: auto;
+      font-size: 0.9em;
+      font-weight: bold;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .status.completed {
+      background-color: #28a745;
+    }
+
+    .status.in-progress {
+      background-color: #ffc107;
+    }
+
+    .btn.details {
+      text-decoration: none;
+      color: white;
+      background-color: #007bff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 0.9em;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .btn.details:hover {
+      background-color: #0056b3;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      color: white;
+      background-color: #007bff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Project List</h1>
+    <a href="/dashboard" class="btn">Back to Dashboard</a>
+  </div>
+
+  <div class="project-list">
+    <!-- If projects are available -->
+    <div th:if="${projects != null and projects.size() > 0}">
+      <div th:each="project : ${projects}" class="project-card">
+        <h3 th:text="${project.project_name}">Project Name</h3>
+        <span th:classappend="${project.status.name()}"
+              th:text="${project.status.name()}"
+              class="status">Status</span>
+        <!-- 상세보기 버튼 추가 -->
+        <a th:href="@{/projects/{id}(id=${project.project_id})}" class="btn details">View Details</a>
+      </div>
+    </div>
+
+    <!-- If no projects are available -->
+    <p class="no-projects" th:if="${projects == null or projects.size() == 0}">No projects available.</p>
+  </div>
+
+  <div class="footer">
+    <p>Project Management System &copy; 2024</p>
+  </div>
+</div>
+</body>
+</html>

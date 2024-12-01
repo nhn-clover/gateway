@@ -5,9 +5,166 @@
     <title>Title</title>
 </head>
 <body>
-project detail
 
 <br>
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            font-size: 0.9em;
+            text-decoration: none;
+            border-radius: 5px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Task List</h1>
+        <a href="/projects" class="btn btn-back" style="background-color: #007bff;">프로젝트 리스트 보기</a>
+        <a href="/tasks" class="btn btn-back" style="background-color: #007bff;">테스크 생성</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>테스크</th>
+            <th>기능</th>
+            <th>마일스톤</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- If tasks are available -->
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task}">Task Name</td>
+
+            <td th:text="태그">Task Name</td>
+
+            <td class="actions">
+                <a th:href="@{/tasks/edit/{id}(id=${task})}" class="btn btn-edit">수정</a>
+                <a th:href="@{/tasks/delete/{id}(id=${task})}" class="btn btn-delete">삭제</a>
+            </td>
+
+            <td class="actions">
+
+
+            </td>
+
+            <td class="actions">
+
+
+            </td>
+        </tr>
+        <!-- If no tasks are available -->
+        <tr th:if="${tasks == null or tasks.size() == 0}">
+            <td colspan="4">No tasks available.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>Project Management System &copy; 2024</p>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
 
 
 
