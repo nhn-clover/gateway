@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Task</title>
+</head>
+<body>
+<h1>Edit Task</h1>
+
+<form th:action="@{/tasks/{taskId}(taskId=${task.taskId})}" method="post">
+  <label for="milestone">Select MileStone:</label>
+  <select name="milestoneId" id="milestone" th:each="milestone : ${milestones}"
+          th:value="${milestone.milestoneId}" th:selected="${milestone.milestoneId == task.mileStone.milestoneId}">
+    <option th:text="${milestone.mileStoneName}"></option>
+  </select>
+
+  <label for="tags">Select Tags:</label>
+  <select name="tagIds" id="tags" multiple th:each="tag : ${tags}">
+    <option th:value="${tag.tagId}" th:selected="${task.tags.contains(tag)}" th:text="${tag.tagName}"></option>
+  </select>
+
+  <button type="submit">Update Task</button>
+</form>
+
+</body>
+</html>
