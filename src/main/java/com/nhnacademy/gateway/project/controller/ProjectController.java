@@ -1,10 +1,17 @@
 package com.nhnacademy.gateway.project.controller;
 
+import com.nhnacademy.gateway.common.client.AccountApiClient;
+import com.nhnacademy.gateway.common.client.TaskApiClient;
 import com.nhnacademy.gateway.project.domain.Project;
+import com.nhnacademy.gateway.project.domain.ProjectRequest;
 import com.nhnacademy.gateway.project.domain.Status;
+
+import lombok.RequiredArgsConstructor;
+
 import com.nhnacademy.gateway.task.domain.Task;
 import com.nhnacademy.gateway.task.domain.TaskRequest;
 import jakarta.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,16 +25,21 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/projects")
+@RequiredArgsConstructor
 public class ProjectController {
+
+    private final TaskApiClient taskApiClient;
+    private final AccountApiClient accountApiClient;
 
     @GetMapping
     public String viewListProject(Model model){
 
+        List<Long> projectIds = accountApiClient.getMemberProjects(1L);
         List<Project> projects = new ArrayList<>();
 
-        projects.add(new Project(1L , "프로젝트1", Status.IN_PROGRESS,1));
-        projects.add(new Project(2L , "프로젝트2", Status.IN_PROGRESS,2));
-        projects.add(new Project(3L , "프로젝트3", Status.IN_PROGRESS,3));
+        for (Long projectId : projectIds){
+            projects.add(taskApiClient.getProject(projectId));
+        }
 
 
         model.addAttribute("projects", projects);
@@ -39,15 +51,28 @@ public class ProjectController {
 //    public String createProjectView(){
 //        return "project/createProject";
 //    }
-    @PostMapping("/projects")
+    @PostMapping
     public String createProject(@AuthenticationPrincipal UserDetails userDetails,
-                                @RequestParam("projectName") String  projectName){
+                                @ModelAttribute ProjectRequest request){
+
+        log.info("hello --------------------- hello");
+
+        request.setStatus(Status.TODO.name());
+        request.setAdminId(1L);
+
+        taskApiClient.createProject(request);
 
         log.info("username : {}" , userDetails.getUsername());
         log.info("password : {}" , userDetails.getPassword());
-        log.info("projectName : {}", projectName);
+        log.info("projectName : {}", request.getProjectName());
         // TODO 여기서 task 로 보냄
         return "home";
+    }
+
+
+    @GetMapping("/create")
+    public String createViewProject(@AuthenticationPrincipal UserDetails userDetails){
+        return "/project/createProject";
     }
 
     @GetMapping("/{projectId}")
