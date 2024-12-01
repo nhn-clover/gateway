@@ -7,9 +7,6 @@ import lombok.Getter;
 @Getter
 public class Task {
     private long taskId;
-    private long projectId;
     private String content;
 
-    // nullable
-    private long milestoneId;
 }

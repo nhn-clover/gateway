@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Milestone {
     private long milestoneId;
-    private String projectId;
+    private String milestoneName;
+
     // TODO 마일스톤 객체 저장 (마일스톤이 멀 저장해야 하는지 모르겠음)
+
 }
