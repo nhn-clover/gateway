@@ -126,15 +126,23 @@
         <tbody>
         <!-- If tasks are available -->
         <tr th:each="task : ${tasks}">
-            <td>
-                <!-- 태스크 이름 클릭 시 상세 페이지로 이동 -->
-                <a th:href="@{/tasks/{taskId}(taskId=${task.taskId})}" th:text="${task.content}">Task Name</a>
-            </td>
-            <td th:text="'태그: ' + ${task.tags}">Tag Details</td>
-            <td th:text="${task.mileStone}">Milestone</td>
+            <td th:text="${task}">Task Name</td>
+
+            <td th:text="태그">Task Name</td>
+
             <td class="actions">
-                <a th:href="@{/tasks/edit/{taskId}(taskId=${task.taskId})}" class="btn btn-edit">수정</a>
-                <a th:href="@{/tasks/delete/{taskId}(taskId=${task.taskId})}" class="btn btn-delete">삭제</a>
+                <a th:href="@{/tasks/edit/{id}(id=${task})}" class="btn btn-edit">수정</a>
+                <a th:href="@{/tasks/delete/{id}(id=${task})}" class="btn btn-delete">삭제</a>
+            </td>
+
+            <td class="actions">
+
+
+            </td>
+
+            <td class="actions">
+
+
             </td>
         </tr>
         <!-- If no tasks are available -->
